@@ -7,10 +7,10 @@ require("dotenv").config();
 
 // REQUIRE DEPENDENCIES AND CONTROLLERS
 const checkForSession = require(`${__dirname}/middlewares/checkForSession`);
-const swgc = require("./controllers/swag_controller");
-const ac = require("./controllers/auth_controller");
-const cc = require("./controllers/cart_controller");
-const sc = require("./controllers/search_controller");
+const swagController = require("./controllers/swag_controller");
+const authController = require("./controllers/auth_controller");
+const cartController = require("./controllers/cart_controller");
+const searchController = require("./controllers/search_controller");
 
 // INITIALIZE APP
 const app = express();
@@ -31,21 +31,21 @@ app.use(checkForSession);
 app.use(express.static(`${__dirname}/../build`));
 
 // SWAG API
-app.get("/api/swag", swgc.read);
+app.get("/api/swag", swagController.read);
 
 // USER API
-app.post("/api/login", ac.login);
-app.post("/api/register", ac.register);
-app.post("/api/signout", ac.signout);
-app.get("/api/user", ac.getUser);
+app.post("/api/login", authController.login);
+app.post("/api/register", authController.register);
+app.post("/api/signout", authController.signout);
+app.get("/api/user", authController.getUser);
 
 // CART API
-app.post("/api/cart", cc.add);
-app.post("/api/cart/checkout", cc.checkout);
-app.delete("/api/cart", cc.delete);
+app.post("/api/cart", cartController.add);
+app.post("/api/cart/checkout", cartController.checkout);
+app.delete("/api/cart", cartController.delete);
 
 // SEARCH API
-app.get("/api/search", sc.search);
+app.get("/api/search", searchController.search);
 
 // LISTEN ON PORT
 const port = 3000;
